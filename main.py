@@ -16,29 +16,29 @@ function_descriptions = [
         "parameters": {
             "type": "object",
             "properties": {
-                "description": {
+                "task": {
                     "type": "string",
-                    "description": "Short description of the email (in english)"
+                    "description": "Short description of the email (in English)"
                 },                        
                 "priority": {
                     "type": "string",
-                    "description": "Try to give a priority score to this email based on importance, from 0 to 10; 10 most important (in english)"
+                    "description": "Try to give a priority score to this email based on importance, from 0 to 10; 10 most important (in English)"
                 },
                 "task_category": {
                     "type": "string",
-                    "description": "Try to categorise this email into categories like those: 1. software support; 2. invoice-related; 3. receipts; 4. reimbursement; 5. financial report-related; 6. feedback  (in english)"
+                    "description": "Try to categorise this email into categories like those: 1. software support; 2. invoice-related; 3. receipts; 4. reimbursement; 5. financial report-related; 6. feedback ; 7. customer support; 8. other."
                 },
                 "emotion":{
                     "type": "string",
-                    "description": "Try to give a emotion score to this email based on the tone and emotion and customer satisfaction, then classify into the following: 1. extremly satisfied; 2. satisfied; 3. neutral; 4. unsatisfied; 5. extremly unsatisfied"
+                    "description": "Try to perform sentiment analysis on this email based on the tone and emotion then categorise into the following categories: 1. extremly satisfied; 2. satisfied; 3. neutral; 4. unsatisfied; 5. extremly unsatisfied"
                 },
 
                 "next_step":{
                     "type": "string",
-                    "description": "What is the suggested next step to move this forward? (in english)"
+                    "description": "What is the suggested next step to move this forward? (in English)"
                 }
             },
-            "required": ["description", "task_category", "priority", "emotion", "next_step"]
+            "required": ["task", "task_category", "priority", "emotion", "next_step"]
         }
     }
 ]
@@ -66,14 +66,14 @@ def analyse_email(email: Email):
     )
 
     arguments = response.choices[0]["message"]["function_call"]["arguments"]
-    description = eval(arguments).get("description")
+    task = eval(arguments).get("task")
     priority = eval(arguments).get("priority")
     task_category = eval(arguments).get("task_category")
     emotion = eval(arguments).get("emotion")
     next_step = eval(arguments).get("next_step")
 
     return {
-        "description": description,
+        "task": task,
         "priority": priority,
         "task_category": task_category,
         "emotion": emotion,
