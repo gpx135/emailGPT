@@ -22,11 +22,11 @@ function_descriptions = [
                 },                        
                 "priority": {
                     "type": "string",
-                    "description": "Try to give a priority score to this email based on emergency, from 0 to 10; 10 most emergency"
+                    "description": "Try to give a priority score to this email based on importance, from 0 to 10; 10 most important"
                 },
                 "task_category": {
                     "type": "string",
-                    "description": "Try to categorise this email into categories like those: 1. customer support; 2. consulting; 3. partnership; 5. etc."
+                    "description": "Try to categorise this email into categories like those: 1. software support; 2. invoice-related; 3. receipts$reimbursment; 4. financial report-related"
                 },
 
                 "next_step":{
