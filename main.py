@@ -29,12 +29,12 @@ function_descriptions = [
                     "description": "Try to categorise this email into categories like those: 1. customer support; 2. consulting; 3. partnership; 5. etc."
                 },
 
-                "nextStep":{
+                "next_step":{
                     "type": "string",
                     "description": "What is the suggested next step to move this forward?"
                 }
             },
-            "required": ["task", "task_category", "priority", "nextStep"]
+            "required": ["task", "task_category", "priority", "next_step"]
         }
     }
 ]
@@ -65,11 +65,11 @@ def analyse_email(email: Email):
     task = eval(arguments).get("task")
     priority = eval(arguments).get("priority")
     task_category = eval(arguments).get("task_category")
-    nextStep = eval(arguments).get("nextStep")
+    next_step = eval(arguments).get("next_step")
 
     return {
         "task": task,
         "priority": priority,
         "task_category": task_category,
-        "nextStep": nextStep
+        "next_step": next_step
     }
