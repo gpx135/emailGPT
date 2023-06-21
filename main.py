@@ -38,7 +38,7 @@ function_descriptions = [
                     "description": "What is the suggested next step to move this forward? (in english)"
                 }
             },
-            "required": ["task", "task_category", "priority", "next_step"]
+            "required": ["description", "task_category", "priority", "emotion", "next_step"]
         }
     }
 ]
@@ -66,14 +66,14 @@ def analyse_email(email: Email):
     )
 
     arguments = response.choices[0]["message"]["function_call"]["arguments"]
-    task = eval(arguments).get("task")
+    description = eval(arguments).get("description")
     priority = eval(arguments).get("priority")
     task_category = eval(arguments).get("task_category")
     emotion = eval(arguments).get("emotion")
     next_step = eval(arguments).get("next_step")
 
     return {
-        "task": task,
+        "description": description,
         "priority": priority,
         "task_category": task_category,
         "emotion": emotion,
