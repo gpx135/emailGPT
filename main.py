@@ -12,7 +12,7 @@ app = FastAPI()
 function_descriptions = [
     {
         "name": "extract_info_from_email",
-        "description": "categorise & extract key info from an email, such as description, catagory, contact details, etc.",
+        "description": "categorise & extract key info from an email, such as task, catagory, contact details, emotion, priority and posible solution, etc.",
         "parameters": {
             "type": "object",
             "properties": {
