@@ -12,26 +12,30 @@ app = FastAPI()
 function_descriptions = [
     {
         "name": "extract_info_from_email",
-        "description": "categorise & extract key info from an email, such as task, task catagory, contact details, etc.",
+        "description": "categorise & extract key info from an email, such as description, catagory, contact details, etc.",
         "parameters": {
             "type": "object",
             "properties": {
-                "task": {
+                "description": {
                     "type": "string",
-                    "description": "Short description of the task"
+                    "description": "Short description of the email (in english)"
                 },                        
                 "priority": {
                     "type": "string",
-                    "description": "Try to give a priority score to this email based on importance, from 0 to 10; 10 most important"
+                    "description": "Try to give a priority score to this email based on importance, from 0 to 10; 10 most important (in english)"
                 },
                 "task_category": {
                     "type": "string",
-                    "description": "Try to categorise this email into categories like those: 1. software support; 2. invoice-related; 3. receipts$reimbursment; 4. financial report-related"
+                    "description": "Try to categorise this email into categories like those: 1. software support; 2. invoice-related; 3. receipts; 4. reimbursement; 5. financial report-related; 6. feedback  (in english)"
+                },
+                "emotion":{
+                    "type": "string",
+                    "description": "Try to give a emotion score to this email based on the tone and emotion and customer satisfaction, then classify into the following: 1. extremly satisfied; 2. satisfied; 3. neutral; 4. unsatisfied; 5. extremly unsatisfied"
                 },
 
                 "next_step":{
                     "type": "string",
-                    "description": "What is the suggested next step to move this forward?"
+                    "description": "What is the suggested next step to move this forward? (in english)"
                 }
             },
             "required": ["task", "task_category", "priority", "next_step"]
@@ -65,11 +69,13 @@ def analyse_email(email: Email):
     task = eval(arguments).get("task")
     priority = eval(arguments).get("priority")
     task_category = eval(arguments).get("task_category")
+    emotion = eval(arguments).get("emotion")
     next_step = eval(arguments).get("next_step")
 
     return {
         "task": task,
         "priority": priority,
         "task_category": task_category,
+        "emotion": emotion,
         "next_step": next_step
     }
