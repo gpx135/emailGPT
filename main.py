@@ -64,13 +64,12 @@ def analyse_email(email: Email):
     arguments = response.choices[0]["message"]["function_call"]["arguments"]
     task = eval(arguments).get("task")
     priority = eval(arguments).get("priority")
-
     task_category = eval(arguments).get("task_category")
     nextStep = eval(arguments).get("nextStep")
 
     return {
-        "companyName": task,
+        "task": task,
         "priority": priority,
-        "category": task_category,
+        "task_category": task_category,
         "nextStep": nextStep
     }
