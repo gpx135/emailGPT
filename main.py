@@ -18,7 +18,7 @@ function_descriptions = [
             "properties": {
                 "task": {
                     "type": "string",
-                    "description": "Short description of the email (in English)"
+                    "description": "Short description of the email reply in English"
                 },                        
                 "priority": {
                     "type": "string",
@@ -26,19 +26,24 @@ function_descriptions = [
                 },
                 "task_category": {
                     "type": "string",
-                    "description": "Try to categorise this email into categories like those: 1. software support; 2. invoice-related; 3. receipts; 4. reimbursement; 5. financial report-related; 6. feedback ; 7. customer support; 8. other."
+                    "description": "Try to categorise this email into categories like those  (in English): 1. software support; 2. invoice-related; 3. receipts; 4. reimbursement; 5. financial report-related; 6. feedback ; 7. customer support; 8. other."
                 },
                 "emotion":{
                     "type": "string",
-                    "description": "Try to perform sentiment analysis on this email based on the tone and emotion then categorise into the following categories: 1. extremly satisfied; 2. satisfied; 3. neutral; 4. unsatisfied; 5. extremly unsatisfied"
+                    "description": "Try to perform sentiment analysis on this email based on the tone and emotion then categorise into the following categories in English: 1. extremly satisfied; 2. satisfied; 3. neutral; 4. unsatisfied; 5. extremly unsatisfied"
                 },
 
                 "next_step":{
                     "type": "string",
                     "description": "What is the suggested next step to move this forward? (in English)"
+                },
+
+                "suggested_reply":{
+                    "type": "string",
+                    "description": "What is the suggested email reply to this email, use the language same as the email content."
                 }
             },
-            "required": ["task", "task_category", "priority", "emotion", "next_step"]
+            "required": ["task", "task_category", "priority", "emotion", "next_step", "suggested_reply"]
         }
     }
 ]
@@ -61,7 +66,7 @@ def analyse_email(email: Email):
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo-0613",
         messages=messages,
-        functions = function_descriptions,
+        functions=function_descriptions,
         function_call="auto"
     )
 
@@ -71,11 +76,13 @@ def analyse_email(email: Email):
     task_category = eval(arguments).get("task_category")
     emotion = eval(arguments).get("emotion")
     next_step = eval(arguments).get("next_step")
+    suggested_reply = eval(arguments).get("suggested_reply")
 
     return {
         "task": task,
         "priority": priority,
         "task_category": task_category,
         "emotion": emotion,
-        "next_step": next_step
+        "next_step": next_step,
+        "suggested_reply": suggested_reply,
     }
